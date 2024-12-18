@@ -2,7 +2,10 @@ import express, { Application } from 'express';
 import http from 'http';
 import {Server as SocketIOServer} from 'socket.io';
 import cors from 'cors';
-
+import { Sequelize} from 'sequelize';
+//importer le model de la base de données
+const CommandeModel = require('./models/Commande');
+const DataType = require('sequelize');
 //Application express
 const app: Application = express();
 
@@ -49,6 +52,37 @@ socketIO.on('disconnect', () => {
 app.get('/api', (req, res) => {
     res.send('API fonctionnelle !');
 });
+
+//Connexion à la base de données
+
+const sequelize= new Sequelize(
+    'nextechdb', // Nom de la base de données que l'on veut créer
+    'root', // identifiant de l'utilisateur
+    '', // mot de passe de l'utilisateur
+    {
+      host: 'localhost',
+      dialect: 'mariadb',
+      dialectOptions: {
+        timezone: 'Etc/GMT-2',
+      },
+      logging: false
+    }
+);
+
+sequelize.authenticate()
+  .then(() => console.log('Connexion à la base de données réussie !'))
+  .catch((error) => console.error('Impossible de se connecter à la base de données :', error));
+
+//Synchronisation des modèles avec la base de données
+
+const Comande = CommandeModel(sequelize, DataType);
+
+sequelize.sync({ force: true })
+  .then(() => console.log('Les tables ont été créées avec succès !'))
+  .catch((error) => console.error('Erreur lors de la création des tables :', error));
+
+
+
 
 //Lancement du serveur
 
