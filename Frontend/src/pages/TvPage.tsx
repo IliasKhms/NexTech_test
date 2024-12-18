@@ -7,13 +7,13 @@ const TVPage: React.FC = () => {
         socket.emit('page', 'tv');
 
         // Confirmer la connexion
-        socket.on('connect', () => {
+        socket.on('connection', () => {
             console.log('Connecté au serveur depuis la page TV avec ID :', socket.id);
         });
 
         // Nettoyer lors du démontage
         return () => {
-            socket.off('connect');
+            socket.off('connection');
         };
     }, []);
 
