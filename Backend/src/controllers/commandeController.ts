@@ -5,7 +5,7 @@
 */
 
 import { Request, Response } from 'express';
-const Commande = require('../models/commande');
+import { Commande } from '../models/commande';
 
 //Créer une commande
 
@@ -18,9 +18,9 @@ export const createCommande = async (req:Request, res:Response) => {
     }
 };
 
-//Modifier une commande
+//Modifier le contenu d'une commande
 
-export const updateCommande = async (req:Request, res:Response) => {
+export const updateCommandeContent = async (req:Request, res:Response) => {
     try {
         const commande = await Commande.findByPk(req.params.id);
         if (commande) {
@@ -33,6 +33,54 @@ export const updateCommande = async (req:Request, res:Response) => {
         res.status(500).json({ error: error.message });
     }
 }
+
+//Modifier le statut d'une commande
+
+export const updateCommandeStatut = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { id } = req.params;
+        const { statut } = req.body;
+
+        const commande = await Commande.findByPk(id);
+        if (!commande) {
+            res.status(404).json({ message: 'Commande non trouvée' });
+            return;
+        }
+
+        commande.statut = statut;
+        await commande.save();
+
+        res.status(200).json(commande);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
+
+//Modifier le paiement d'une commande
+
+export const updateCommandePaiement = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { id } = req.params;
+        const { paiement } = req.body;
+
+        const commande = await Commande.findByPk(id);
+        if (!commande) {
+            res.status(404).json({ message: 'Commande non trouvée' });
+            return;
+        }
+
+        commande.paiement = paiement;
+        await commande.save();
+
+        res.status(200).json(commande);
+    } catch (error: any) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
 
 //Afficher toutes les commandes
 

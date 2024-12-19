@@ -4,6 +4,7 @@ import {Server as SocketIOServer} from 'socket.io';
 import cors from 'cors';
 import { Sequelize} from 'sequelize';
 import {initCommandModel}from './models/commande';
+import CommandeRoute from './routes/commandeRoute';
 //Application express
 const app: Application = express();
 
@@ -47,9 +48,8 @@ socketIO.on('disconnect', () => {
     console.log('Un client est déconnecté !');
 });
 
-app.get('/api', (req, res) => {
-    res.send('API fonctionnelle !');
-});
+
+app.use('/api', CommandeRoute);
 
 //Connexion à la base de données
 
@@ -75,7 +75,7 @@ sequelize
         console.log('Connexion à la base de données réussie !');
 
         // Synchroniser les modèles avec la base de données
-        return sequelize.sync({ alter: true });
+        return sequelize.sync({ force:true});
     })
     .then(() => {
         console.log('Les tables ont été créées ou mises à jour avec succès !');

@@ -5,7 +5,7 @@ interface CommandeAttributes {
     id: number;
     menu: string;
     modification: string;
-    supplément: string;
+    supplement: string;
     statut: string;
     paiement: boolean;
     createdAt: Date;
@@ -19,7 +19,7 @@ export class Commande extends Model<CommandeAttributes, CommandeCreationAttribut
     public id!: number;
     public menu!: string;
     public modification!: string;
-    public supplément!: string;
+    public supplement!: string;
     public statut!: string;
     public paiement!: boolean; 
     public createdAt!: Date;
@@ -58,7 +58,7 @@ export const initCommandModel = (sequelize: Sequelize): void => {
                     },
                 },
             },
-            supplément: {
+            supplement: {
                 type: DataTypes.STRING,
                 allowNull: false,
                 validate: {
