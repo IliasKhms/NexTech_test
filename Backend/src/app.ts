@@ -30,16 +30,6 @@ socketIO.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log('Un client est déconnecté !');
     });
-
-    socket.on("cmdValide", (data) => {
-        console.log("Commande validée :", data);
-        socketIO.emit("cmdValide", data);
-    });
-
-    socket.on("cmdModifiee", (data) => {
-        console.log("Commande modifiée :", data);
-        socket.broadcast.emit("cmdModifiee", data);
-    })
 });
 
 //gestion déconnexion

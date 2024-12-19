@@ -13,6 +13,10 @@ export const createCommande = async (req:Request, res:Response) => {
     try {
         const commande = await Commande.create(req.body);
         res.status(201).json(commande);
+
+        const io = req.app.get('socketio');
+        io.emit('commandeCreer', commande);
+        
     } catch (error: any) {
         res.status(500).json({ error : error.message });
     }
@@ -26,6 +30,9 @@ export const updateCommandeContent = async (req:Request, res:Response) => {
         if (commande) {
             await commande.update(req.body);
             res.status(200).json(commande);
+
+            const io = req.app.get('socketio');
+            io.emit('commandeUpdate', commande);
         } else {
             res.status(404).json({ message: 'Commande non trouvée' });
         }
@@ -51,6 +58,9 @@ export const updateCommandeStatut = async (req: Request, res: Response): Promise
         await commande.save();
 
         res.status(200).json(commande);
+
+        const io = req.app.get('socketio');
+        io.emit('statutUpdate', commande);
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
@@ -75,6 +85,9 @@ export const updateCommandePaiement = async (req: Request, res: Response): Promi
         await commande.save();
 
         res.status(200).json(commande);
+        const io = req.app.get('socketio');
+        io.emit('paiementUpdate', commande);
+        
     } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
