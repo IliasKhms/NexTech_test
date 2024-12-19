@@ -3,9 +3,7 @@ import http from 'http';
 import {Server as SocketIOServer} from 'socket.io';
 import cors from 'cors';
 import { Sequelize} from 'sequelize';
-//importer le model de la base de données
-const CommandeModel = require('./models/Commande');
-const DataType = require('sequelize');
+import {initCommandModel}from './models/commande';
 //Application express
 const app: Application = express();
 
@@ -69,24 +67,25 @@ const sequelize= new Sequelize(
     }
 );
 
-sequelize.authenticate()
-  .then(() => console.log('Connexion à la base de données réussie !'))
-  .catch((error) => console.error('Impossible de se connecter à la base de données :', error));
+initCommandModel(sequelize); // Initialise le modèle Commande
 
-//Synchronisation des modèles avec la base de données
+sequelize
+    .authenticate()
+    .then(() => {
+        console.log('Connexion à la base de données réussie !');
 
-const Comande = CommandeModel(sequelize, DataType);
-
-sequelize.sync({ force: true })
-  .then(() => console.log('Les tables ont été créées avec succès !'))
-  .catch((error) => console.error('Erreur lors de la création des tables :', error));
-
-
-
-
-//Lancement du serveur
-
-const PORT = 5000; // Port du serveur
-server.listen(PORT, () => {
-    console.log(`Serveur en cours d'exécution sur http://localhost:${PORT}`);
-});
+        // Synchroniser les modèles avec la base de données
+        return sequelize.sync({ alter: true });
+    })
+    .then(() => {
+        console.log('Les tables ont été créées ou mises à jour avec succès !');
+        
+        // Lancer le serveur 
+        const PORT = 5000;
+        server.listen(PORT, () => {
+            console.log(`Serveur en cours d'exécution sur http://localhost:${PORT}`);
+        });
+    })
+    .catch((error) => {
+        console.error('Erreur lors de la création des tables :', error);
+    });
