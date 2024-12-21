@@ -11,11 +11,23 @@ import { Commande } from '../models/commande';
 
 export const createCommande = async (req:Request, res:Response) => {
     try {
+
+        //je crée une commande avec les informations reçues dans le body de la requête
         const commande = await Commande.create(req.body);
+
+        //j'envoie un message à tous les clients connectés pour les informer qu'une commande a été
+        const io = req.app.get('socketio');
+        if (!io) {
+            throw new Error('Socket.io non configuré sur l\'application');
+        }
+        io.emit('commandeCreer', commande);
+
+        //je renvoie la commande créée au client   
         res.status(201).json(commande);
 
-        const io = req.app.get('socketio');
-        io.emit('commandeCreer', commande);
+        return;
+
+       
         
     } catch (error: any) {
         res.status(500).json({ error : error.message });

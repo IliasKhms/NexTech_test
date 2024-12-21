@@ -1,11 +1,14 @@
 import { Router } from "express";
+import express from "express";
 import { getAllCommandes,
          createCommande,
          updateCommandeContent,
          updateCommandeStatut,
          updateCommandePaiement } from "../controllers/commandeController";
 
-const router : Router = Router();
+
+
+const router = express.Router();
 
 router.get('/commandes', getAllCommandes);
 

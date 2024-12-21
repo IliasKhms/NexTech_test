@@ -22,6 +22,10 @@ const socketIO = new SocketIOServer(server, {
     },
 });
 
+//Ajout de socket.io à l'application express
+
+app.set('socketio', socketIO);
+
 //Ecoute des événements socket.io
 
 socketIO.on('connection', (socket) => {

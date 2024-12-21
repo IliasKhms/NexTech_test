@@ -77,7 +77,7 @@ export const initCommandModel = (sequelize: Sequelize): void => {
                     notEmpty: { msg: "Le statut ne peut pas être vide" },
                     notNull: { msg: "Le statut est obligatoire" },
                     isIn: {
-                        args: [['En préparation', 'Prêt', 'Finie']],
+                        args: [['En attente','En préparation', 'Prêt', 'Finie']],
                         msg: "Le statut doit être parmi les options disponibles",
                     },
                 },
