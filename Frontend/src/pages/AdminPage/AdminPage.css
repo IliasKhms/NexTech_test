@@ -1,0 +1,71 @@
+.admin-container {
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+.commande-form {
+    margin-bottom: 2rem;
+}
+
+.commande-form label {
+    display: block;
+    margin-top: 1rem;
+}
+
+.commande-form select,
+.commande-form button {
+    display: block;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.commande-form button {
+    padding: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.grid-container {
+    display: flex;
+    gap: 2rem;
+}
+
+.grid-item {
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    background-color: #f9f9f9;
+}
+
+.grid-item h2 {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.commande-card {
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.commande-card p {
+    margin: 0.5rem 0;
+}
+
+.commande-card button {
+    padding: 0.5rem 1rem;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}

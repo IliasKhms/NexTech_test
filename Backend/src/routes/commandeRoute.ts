@@ -3,8 +3,8 @@ import express from "express";
 import { getAllCommandes,
          createCommande,
          updateCommandeContent,
-         updateCommandeStatut,
-         updateCommandePaiement } from "../controllers/commandeController";
+         updateCommandeStatut
+         } from "../controllers/commandeController";
 
 
 
@@ -18,7 +18,6 @@ router.put('/commande/:id/content', updateCommandeContent);
 
 router.put('/commande/:id/statut', updateCommandeStatut);
 
-router.put('/commande/:id/paiement', updateCommandePaiement);
 
 export default router;
 

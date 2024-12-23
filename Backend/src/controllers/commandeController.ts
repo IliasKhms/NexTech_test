@@ -34,7 +34,7 @@ export const createCommande = async (req:Request, res:Response) => {
     }
 };
 
-//Modifier le contenu d'une commande
+//Modifier le contenu d'une commande (Cette route n'est pas utilisée dans le projet car pas demandée dans le cahier des charges et besoin de gagner du temps)
 
 export const updateCommandeContent = async (req:Request, res:Response) => {
     try {
@@ -77,35 +77,6 @@ export const updateCommandeStatut = async (req: Request, res: Response): Promise
         res.status(500).json({ error: error.message });
     }
 };
-
-
-
-//Modifier le paiement d'une commande
-
-export const updateCommandePaiement = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const { id } = req.params;
-        const { paiement } = req.body;
-
-        const commande = await Commande.findByPk(id);
-        if (!commande) {
-            res.status(404).json({ message: 'Commande non trouvée' });
-            return;
-        }
-
-        commande.paiement = paiement;
-        await commande.save();
-
-        res.status(200).json(commande);
-        const io = req.app.get('socketio');
-        io.emit('paiementUpdate', commande);
-        
-    } catch (error: any) {
-        res.status(500).json({ error: error.message });
-    }
-};
-
-
 
 //Afficher toutes les commandes
 

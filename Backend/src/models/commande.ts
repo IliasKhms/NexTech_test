@@ -7,7 +7,6 @@ interface CommandeAttributes {
     modification: string;
     supplement: string;
     statut: string;
-    paiement: boolean;
     createdAt: Date;
 }
 
@@ -21,7 +20,6 @@ export class Commande extends Model<CommandeAttributes, CommandeCreationAttribut
     public modification!: string;
     public supplement!: string;
     public statut!: string;
-    public paiement!: boolean; 
     public createdAt!: Date;
 }
 
@@ -65,7 +63,7 @@ export const initCommandModel = (sequelize: Sequelize): void => {
                     notEmpty: { msg: "Le supplément ne peut pas être vide" },
                     notNull: { msg: "Le supplément est obligatoire" },
                     isIn: {
-                        args: [['Frites', 'Boisson', 'Dessert', 'Sauce', 'Fromage', 'Salade']],
+                        args: [['Aucun','Frites', 'Boisson', 'Dessert', 'Sauce', 'Fromage', 'Salade']],
                         msg: "Le supplément doit être parmi les options disponibles",
                     },
                 },
@@ -77,18 +75,9 @@ export const initCommandModel = (sequelize: Sequelize): void => {
                     notEmpty: { msg: "Le statut ne peut pas être vide" },
                     notNull: { msg: "Le statut est obligatoire" },
                     isIn: {
-                        args: [['En attente','En préparation', 'Prêt', 'Finie']],
+                        args: [['En attente','En préparation', 'Prête', 'Finie']],
                         msg: "Le statut doit être parmi les options disponibles",
                     },
-                },
-            },
-            paiement: {
-                type: DataTypes.BOOLEAN,
-                allowNull: false,
-                defaultValue: false,
-                validate: {
-                    notEmpty: { msg: "Le paiement ne peut pas être vide" },
-                    notNull: { msg: "Le paiement est obligatoire" },
                 },
             },
             createdAt: {
